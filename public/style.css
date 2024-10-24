@@ -1,0 +1,31 @@
+
+/* Chat message bg image */
+.chat{
+    background-color: #e5ddd5;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1089577/background.png);
+    padding-top: 7px;
+    overflow-y: scroll;
+    height: 360px;
+}
+
+/* Input Box */
+.custom-input {
+    border: 2px solid #ccc; 
+    border-radius: 8px; 
+    padding: 8px; 
+    font-size: 14px; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* Input Box Hover Effect */
+.custom-input:focus {
+    border-color: #28a745; 
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); 
+    outline: none; 
+}
+
+/* User list */
+.user-list ul {
+    max-height: 360px;
+    overflow-y: auto;
+}
