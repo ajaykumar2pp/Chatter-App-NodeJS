@@ -3,7 +3,9 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const { Server } = require('socket.io');
+const moment = require('moment')
 const dbConfig = require('./src/config/db.config')
+const User = require("./src/models/user.model.js")
 
 // Initialize Express app
 const app = express();
@@ -26,9 +28,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 io.on("connection", async (socket) => {
     console.log(`New user connected : ${socket.id}`);
 
+    // Username add 
+    socket.on("userData", ({ username, password }) => {
+        
+        // Store user info in the socket object
+        socket.username = username;
+ 
+        const newUser = new User({
+            username, 
+            password,
+            date: moment().format('MMMM Do YYYY, h:mm a')
+        });
+        console.log(newUser)
+        newUser.save().then((savedUser) => {
+            io.emit('addUser', savedUser);
+        });
+    })
+
     //   Handle built-in 'disconnect' event
     socket.on('disconnect', () => {
-        console.log('user disconnected', socket.id);
+        const username = socket.username;
+        console.log('user disconnected', username);
     })
 });
 
