@@ -13,8 +13,8 @@
 </head>
 
 <body>
-    <div class="container p-3">
-        <div class="row mb-2">
+    <div class="container">
+        <div class="row mb-2 mt-2">
             <div class="col-md-12">
                 <h4 class="text-center text-secondary">Chatter App</h4>
             </div>
@@ -29,19 +29,120 @@
                 </div>
                 <div id="chat-messages" class="border rounded chat">
                     <!-- Chat messages -->
+
+                    <!-- Sender Message -->
+                    <div class="message sender">
+                        <img src="/images/user-icon.png" class="user-image" alt="user-icon">
+                        <div class="message-content">
+                            <div>
+                                <div class="message-info">
+                                    <strong>Ajay</strong>
+                                    <small>12:30 PM</small>
+                                </div>
+                                <div class="message-text">
+                                    This is a sender's message.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Receiver Message -->
+                    <div class="message receiver">
+                        <img src="/images/user-icon.png" class="user-image" alt="user-icon">
+                        <div class="message-content">
+                            <div>
+                                <div class="message-info">
+                                    <strong>Komal</strong>
+                                    <small>12:32 PM</small>
+                                </div>
+                                <div class="message-text">
+                                    This is a reciever's message.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sender Message -->
+                    <div class="message sender">
+                        <img src="/images/user-icon.png" class="user-image" alt="user-icon">
+                        <div class="message-content">
+                            <div>
+                                <div class="message-info">
+                                    <strong>Ajay</strong>
+                                    <small>12:30 PM</small>
+                                </div>
+                                <div class="message-text">
+                                    simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                                    industry's standard dummy text ever since the 1500s
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Receiver Message -->
+                    <div class="message receiver">
+                        <img src="/images/user-icon.png" class="user-image" alt="user-icon">
+                        <div class="message-content">
+                            <div>
+                                <div class="message-info">
+                                    <strong>Komal</strong>
+                                    <small>12:32 PM</small>
+                                </div>
+                                <div class="message-text">
+                                    This is a reciever's message.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Receiver Message -->
+                    <div class="message receiver">
+                        <img src="/images/user-icon.png" class="user-image" alt="user-icon">
+                        <div class="message-content">
+                            <div>
+                                <div class="message-info">
+                                    <strong>Komal</strong>
+                                    <small>12:32 PM</small>
+                                </div>
+                                <div class="message-text">
+                                    simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                                    industry's standard dummy text ever since the 1500s
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Sender Message -->
+                    <div class="message sender">
+                        <img src="/images/user-icon.png" class="user-image" alt="user-icon">
+                        <div class="message-content">
+                            <div>
+                                <div class="message-info">
+                                    <strong>Ajay</strong>
+                                    <small>12:30 PM</small>
+                                </div>
+                                <div class="message-text">
+                                    simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                                    industry's standard dummy text ever since the 1500s
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="input-group mt-3">
-                    <input type="text" id="message-input" class="form-control custom-input" placeholder="Type a message..."
-                        autocomplete="off">
+                    <input type="text" id="message-input" class="form-control custom-input"
+                        placeholder="Type a message..." autocomplete="off">
                     <button id="send-btn" class="btn btn-sm btn-success">Send</button>
                 </div>
             </div>
 
             <!-- User list  -->
-            <div class="col-md-4 col-sm-12 bg-white rounded shadow-sm p-3 mb-3">
+            <div class="col-md-4 col-sm-12 bg-white rounded shadow-sm  mb-3">
                 <div class="user-list">
                     <h4 class="bg-primary text-light text-center p-2 rounded">Online Users 4</h4>
-                    <ul id="user-list" class="list-group">
+                    <ul id="userList" class="list-group">
                         <!-- User Name -->
                         <li class="list-group-item">Ajay kumar</li>
                         <li class="list-group-item">Sagar</li>
