@@ -40,10 +40,10 @@ io.on("connection", async (socket) => {
             password,
             date: moment().format('MMMM Do YYYY, h:mm a')
         });
-        console.log(newUser)
+        // console.log(newUser)
         const userId = newUser._id.toString();
         const newU = { _id: userId };
-        console.log(newU);
+        // console.log(newU);
         // newUser.save().then((savedUser) => {
         //     io.emit('addUser', savedUser);
         // }).catch(err => console.error('Error saving user:', err));
@@ -59,7 +59,7 @@ io.on("connection", async (socket) => {
             sender: username,
             date: moment().format('MMMM Do YYYY, h:mm a')
         });
-        console.log(newMessage)
+        // console.log(newMessage)
         //  newMessage.save().then(() => {
         //     io.emit('message', { sender:newMessage });
         // });
