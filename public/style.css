@@ -184,6 +184,4 @@ html::-webkit-scrollbar-track {
     max-width: 400px;
     margin: 0;  
     font-size: 12px;
-    transition: opacity 0.3s ease;
-    opacity: 0;
 }

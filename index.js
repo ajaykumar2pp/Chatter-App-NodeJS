@@ -29,6 +29,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 io.on("connection", async (socket) => {
     console.log(`New user connected : ${socket.id}`);
 
+    // Previous messages
+    const messages = await Chat.find().sort({ date: -1 });
+    // console.log(messages)
+    socket.emit('previousMessages', messages);
+
     // Username add 
     socket.on("userData", ({ username, password }) => {
 
@@ -40,30 +45,30 @@ io.on("connection", async (socket) => {
             password,
             date: moment().format('MMMM Do YYYY, h:mm a')
         });
-        // console.log(newUser)
+        console.log(newUser)
         const userId = newUser._id.toString();
-        const newU = { _id: userId };
+        // const newU = { _id: userId };
         // console.log(newU);
         // newUser.save().then((savedUser) => {
         //     io.emit('addUser', savedUser);
         // }).catch(err => console.error('Error saving user:', err));
 
-         // Notify other users about the new connection
-         socket.broadcast.emit("notification", { message: `${username} has joined the chat.` })
+        // Notify other users about the new connection
+        socket.broadcast.emit("notification", { message: `${username} has joined the chat.` })
     })
 
     // User Message Send
-    socket.on('chatMessage', ({username, message}) => {
+    socket.on('chatMessage', ({ username, message }) => {
         const newMessage = new Chat({
             message,
             sender: username,
             date: moment().format('MMMM Do YYYY, h:mm a')
         });
         // console.log(newMessage)
-        //  newMessage.save().then(() => {
-        //     io.emit('message', { sender:newMessage });
+        // newMessage.save().then(() => {
+        //     io.emit('receiveMessage', newMessage);
         // });
-        io.emit('message', { sender:newMessage });
+        io.emit('receiveMessage', newMessage);
     })
 
     //   Handle built-in 'disconnect' event
