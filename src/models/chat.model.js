@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 
 const chatSchema = new Schema({
-    message: {
+    sender: {
         type: String,
         required: true,
     },
-    sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    message: {
+        type: String,
+        required: true,
     },
     date: {
         type: String,

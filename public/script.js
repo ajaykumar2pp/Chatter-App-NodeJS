@@ -65,6 +65,16 @@ messageForm.addEventListener('submit',(e)=>{
     }
 })
 
+// Notification User Message Show
+socket.on('notification', (data) => {
+    console.log(data.message)
+    //  A new user has joined!
+    const notificationElement = document.getElementById('notification');
+    const messageElement = document.createElement('p')
+    messageElement.textContent = data.message;
+    notificationElement.appendChild(messageElement);
+})
+
 
 
 
