@@ -6,6 +6,7 @@ const { Server } = require('socket.io');
 const moment = require('moment')
 const dbConfig = require('./src/config/db.config')
 const User = require("./src/models/user.model.js")
+const Chat = require("./src/models/chat.model.js")
 
 // Initialize Express app
 const app = express();
@@ -30,19 +31,39 @@ io.on("connection", async (socket) => {
 
     // Username add 
     socket.on("userData", ({ username, password }) => {
-        
+
         // Store user info in the socket object
         socket.username = username;
- 
+
         const newUser = new User({
-            username, 
+            username,
             password,
             date: moment().format('MMMM Do YYYY, h:mm a')
         });
         console.log(newUser)
-        newUser.save().then((savedUser) => {
-            io.emit('addUser', savedUser);
+        const userId = newUser._id.toString();
+        console.log({
+            _id: userId
         });
+        const newU = { _id: userId };
+        console.log(newU);
+        // newUser.save().then((savedUser) => {
+        //     io.emit('addUser', savedUser);
+        // }).catch(err => console.error('Error saving user:', err));;
+    })
+
+    // User Message Send
+    socket.on('chatMessage', (data) => {
+        console.log(data)
+        const newMessage = new Chat({
+            message,
+            sender: user.id,
+            date: moment().format('MMMM Do YYYY, h:mm a')
+        });
+        console.log(newMessage)
+        //  newMessage.save().then(() => {
+        //     io.emit('message', { sender: user.username, message });
+        // });
     })
 
     //   Handle built-in 'disconnect' event

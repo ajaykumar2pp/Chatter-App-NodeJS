@@ -49,6 +49,20 @@ loginForm.addEventListener('submit', (e) => {
 //  User Message Send
 messageForm.addEventListener('submit',(e)=>{
     e.preventDefault();
+
+    const message = messageInput.value.trim();
+    if (!message) {
+        alert('Please enter message.');
+        return;
+    }
+    console.log(`user message: ${message} `)
+
+    if (message) {
+        socket.emit('chatMessage', { username,  message })
+
+        // Clear input
+        messageInput.value = '';
+    }
 })
 
 
