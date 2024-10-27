@@ -75,10 +75,11 @@ messageForm.addEventListener('submit', (e) => {
 socket.on('notification', (data) => {
     console.log(data.message)
     //  A new user has joined!
-    const notificationElement = document.getElementById('notification');
-    const messageElement = document.createElement('p')
-    messageElement.textContent = data.message;
-    notificationElement.appendChild(messageElement);
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.innerHTML = `<p class=" ">${data.message}</p>`;
+    chatMessages.appendChild(notification);
+    scrollToBottom();
 })
 
 // Display Messages
@@ -100,7 +101,7 @@ function displayMessage(data) {
     messageElement.classList.add('message', data.sender === username ? 'sender' : 'receiver');
 
     messageElement.innerHTML = `
-    <img src="/images/user-icon.png" class="user-image" alt="user-icon">
+    <img src="https://picsum.photos/200"+ class="user-image" alt="user-icon">
     <div class="message-content">
         <div>
             <div class="message-info">

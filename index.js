@@ -54,7 +54,7 @@ io.on("connection", async (socket) => {
         // }).catch(err => console.error('Error saving user:', err));
 
         // Notify other users about the new connection
-        socket.broadcast.emit("notification", { message: `${username} has joined the chat.` })
+        socket.broadcast.emit("notification", { message: `${username} has joined the chat` })
     })
 
     // User Message Send
@@ -74,7 +74,13 @@ io.on("connection", async (socket) => {
     //   Handle built-in 'disconnect' event
     socket.on('disconnect', () => {
         const username = socket.username;
-        console.log('user disconnected', username);
+        if(username){
+            console.log(`${username} has left the chat`);
+            io.emit('notification',{message : `${username} has left the chat` } );
+        }else{
+            console.log("User disconnected");
+        }
+     
     })
 });
 
