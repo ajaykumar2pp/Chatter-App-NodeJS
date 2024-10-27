@@ -1,8 +1,6 @@
 
 const socket = io();
-socket.on('connect', () => {
-    console.log('Connected with id:', socket.id);
-});
+
 
 const chatContainer = document.getElementById('chat-container');
 const loginContainer = document.getElementById('login-container');
@@ -70,7 +68,7 @@ function displayMessage(data) {
     messageElement.classList.add('message', data.sender === username ? 'sender' : 'receiver');
 
     messageElement.innerHTML = `
-    <img src="https://picsum.photos/200"+ class="user-image" alt="user-icon">
+    <img src="https://picsum.photos/200"+ class="user-image" draggable="false" alt="user-icon">
     <div class="message-content">
         <div>
             <div class="message-info">
@@ -113,7 +111,7 @@ messageForm.addEventListener('submit', (e) => {
         alert('Please enter message.');
         return;
     }
-    console.log(`user message: ${message} `)
+    // console.log(`user message: ${message} `)
 
     if (message) {
         socket.emit('chatMessage', { username, message })
@@ -125,7 +123,7 @@ messageForm.addEventListener('submit', (e) => {
 
 // Notification User Message Show
 socket.on('notification', (data) => {
-    console.log(data.message)
+    // console.log(data.message)
     //  A new user has joined!
     const notification = document.createElement('div');
     notification.className = 'notification';
@@ -147,7 +145,7 @@ socket.on('previousMessages', (messages) => {
 
 // receiving messages
 socket.on('receiveMessage', (data) => {
-    console.log("receiveMessage", data)
+    // console.log("receiveMessage", data)
     displayMessage(data);
 
     // Chat scroll bottom

@@ -2,7 +2,7 @@ html,
 body {
     height: 100%;
     margin: 0;
-    overflow: hidden;
+    overflow: auto;
 }
 
 
@@ -20,15 +20,22 @@ html::-webkit-scrollbar-track {
     background-color: rgba(170, 170, 170, 0.1);
 }
 
+/* Login Form */
+#login-container {
+    margin-top: 100px;
+    padding: 0 20px;
+}
+
 /* Chat container background image */
 .chat {
     background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1089577/background.png);
     padding-top: 7px;
     overflow-y: auto;
-    height: 360px;
+    height: 380px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin: 0 auto;
 }
 
 .chat::-webkit-scrollbar {
@@ -48,7 +55,8 @@ html::-webkit-scrollbar-track {
 #chat-header {
     display: flex;
     align-items: center;
-    gap: 5px; 
+    gap: 5px;
+    padding: 0 15px;
 }
 
 /* message styling */
@@ -174,6 +182,7 @@ html::-webkit-scrollbar-track {
     background-color: rgba(170, 170, 170, 0.1);
 }
 
+/* Notification */
 .notification {
     display: flex;
     justify-content: center;
@@ -191,6 +200,37 @@ html::-webkit-scrollbar-track {
     border-radius: 25px;
     width: 70%;
     max-width: 400px;
-    margin: 0;  
+    margin: 0;
     font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    #login-container {
+        margin-top: 50px;
+        padding: 0 10px;
+    }
+
+    .chat {
+        height: auto;
+        padding: 0 10px;
+    }
+
+    .message-content {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+
+    .notification p {
+        width: 100%;
+        font-size: 10px;
+    }
+
+    .message-text {
+        font-size: 13px;
+    }
+
+    .custom-input {
+        font-size: 12px;
+        padding: 6px;
+    }
 }

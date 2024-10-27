@@ -14,16 +14,11 @@
 
 <body>
     <div class="container">
-        <div class="row mb-2 mt-2">
-            <div class="col-md-12">
-                <h4 class="text-center text-secondary">Chatter App</h4>
-            </div>
-        </div>
 
         <div id="login-container">
-            <div class="row">
+            <div class="row mb-3 mt-3">
                 <div class="col-md-6 mx-auto">
-                    <h4 class="text-center">Login Form</h4>
+                    <h4 class="text-center mb-5">Login to Chatter App</h4>
                     <form id="login-form">
                         <div class="form-group position-relative mb-3">
                             <i class="bi bi-person input-icon fw-bold"></i>
@@ -43,14 +38,21 @@
         </div>
 
         <div id="chat-container">
+
+            <div class="row mb-3 mt-3">
+                <div class="col-md-12">
+                    <h4 class="text-center text-secondary">Chatter App</h4>
+                </div>
+            </div>
+
             <div class="row">
 
                 <!-- Chat box  -->
                 <div class="col-md-8 col-sm-12 bg-light rounded shadow-sm p-2 mb-3">
                     <div id="chat-header" class="mt-2 text-muted">
-                        <span  id="welcome-message" class="text-success fw-bold ms-2"></span>
+                        <span id="welcome-message" class="text-success fw-bold ms-2"></span>
                         <span id="typing-indicator" class="fst-italic ms-4"></span>
-                      
+
                         <!-- <span class="text-success fw-bold ">• Welcome Ajay</span>
                         <span class="fst-italic ms-4">Mala typing...</span> -->
                     </div>
@@ -79,7 +81,8 @@
                 <!-- User list  -->
                 <div class="col-md-4 col-sm-12 bg-white rounded shadow-sm  mb-3">
                     <div class="user-list">
-                        <h4 class="bg-primary text-light text-center p-2 rounded">Online Users  <span id="userCount">0</span></h4>
+                        <h4 class="bg-primary text-light text-center p-2 rounded">Online Users <span
+                                id="userCount">0</span></h4>
                         <ul id="userList" class="list-group">
                             <!-- User Name -->
 

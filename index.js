@@ -62,10 +62,10 @@ io.on("connection", async (socket) => {
 
         // Notify other users about the new connection
         socket.broadcast.emit("notification", { message: `${username} has joined the chat` })
-        
+
         // Active users list
         io.emit('userStatus', activeUsers);
-})
+    })
 
     // User Message Send
     socket.on('chatMessage', ({ username, message }) => {
@@ -83,27 +83,27 @@ io.on("connection", async (socket) => {
 
     // Typing Notification
     socket.on('typing', (username) => {
-        socket.broadcast.emit('showTyping', username); 
-      });
+        socket.broadcast.emit('showTyping', username);
+    });
 
     //   Handle built-in 'disconnect' event
     socket.on('disconnect', () => {
         const username = socket.username;
-        if(username){
+        if (username) {
             console.log(`${username} has left the chat`);
 
-             // Remove  user from the active users list
-             delete activeUsers[socket.id];
+            // Remove  user from the active users list
+            delete activeUsers[socket.id];
 
             //  Updated active users list
-             io.emit('userStatus', activeUsers);
+            io.emit('userStatus', activeUsers);
 
-             // Notify user leaving
-            io.emit('notification',{message : `${username} has left the chat` } );
-        }else{
+            // Notify user leaving
+            io.emit('notification', { message: `${username} has left the chat` });
+        } else {
             console.log("User disconnected");
         }
-     
+
     })
 });
 
