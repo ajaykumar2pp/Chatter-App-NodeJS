@@ -40,6 +40,9 @@ io.on("connection", async (socket) => {
         // Store user info in the socket object
         socket.username = username;
 
+        // Welcome the current user
+        socket.emit('message', { message: `Welcome ${username} ` });
+
         const newUser = new User({
             username,
             password,
@@ -70,6 +73,11 @@ io.on("connection", async (socket) => {
         // });
         io.emit('receiveMessage', newMessage);
     })
+
+    // Typing Notification
+    socket.on('typing', (username) => {
+        socket.broadcast.emit('showTyping', username); 
+      });
 
     //   Handle built-in 'disconnect' event
     socket.on('disconnect', () => {

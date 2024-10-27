@@ -12,9 +12,14 @@ const userPassword = document.getElementById('password')
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input')
 const chatMessages = document.getElementById('chat-messages')
+const typingIndicator = document.getElementById('typing-indicator');
+const welcomeMessage = document.getElementById('welcome-message');
 
 // Initially hide chat container
 chatContainer.style.display = 'none';
+
+// Initially hide typing indicator 
+typingIndicator.style.display = 'none';
 
 let username = '';
 let password = '';
@@ -32,7 +37,7 @@ loginForm.addEventListener('submit', (e) => {
         return;
     }
 
-    console.log(`Username: ${username} and Password: ${password}`)
+    // console.log(`Username: ${username} and Password: ${password}`)
 
     //  Send user name to server
     socket.emit('userData', { username, password });
@@ -45,6 +50,26 @@ loginForm.addEventListener('submit', (e) => {
     loginContainer.style.display = 'none';
     chatContainer.style.display = 'block';
 
+    // Welcome message show
+    welcomeMessage.innerText = `• Welcome ${username}`
+
+});
+
+// Typing indicator logic
+messageInput.addEventListener('input', () => {
+    socket.emit('typing', username);
+});
+
+// typing indicator
+socket.on('showTyping', (username) => {
+    // console.log(username)
+    typingIndicator.innerText = `${username} is typing...`;
+    typingIndicator.style.display = 'block';
+
+    // Hide typing indicator after 2 seconds
+    setTimeout(() => {
+        typingIndicator.style.display = 'none';
+    }, 2000);
 });
 
 // Scroll to bottom of the chat container
@@ -116,7 +141,7 @@ function displayMessage(data) {
    
 `;
     chatMessages.appendChild(messageElement);
-    
+
     // Chat scroll bottom 
     scrollToBottom();
 }
