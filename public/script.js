@@ -14,6 +14,8 @@ const messageInput = document.getElementById('message-input')
 const chatMessages = document.getElementById('chat-messages')
 const typingIndicator = document.getElementById('typing-indicator');
 const welcomeMessage = document.getElementById('welcome-message');
+const userList = document.getElementById('userList');
+const userCount = document.getElementById('userCount');
 
 // Initially hide chat container
 chatContainer.style.display = 'none';
@@ -55,6 +57,36 @@ loginForm.addEventListener('submit', (e) => {
 
 });
 
+
+
+// Scroll to bottom of the chat container
+function scrollToBottom() {
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Message  Display function
+function displayMessage(data) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', data.sender === username ? 'sender' : 'receiver');
+
+    messageElement.innerHTML = `
+    <img src="https://picsum.photos/200"+ class="user-image" alt="user-icon">
+    <div class="message-content">
+        <div>
+            <div class="message-info">
+                <strong>${data.sender}</strong>
+                <small>${data.date}</small>
+            </div>
+            <div class="message-text">
+                ${data.message}
+            </div>
+        </div>
+    </div>
+   
+`;
+    chatMessages.appendChild(messageElement);
+}
+
 // Typing indicator logic
 messageInput.addEventListener('input', () => {
     socket.emit('typing', username);
@@ -71,11 +103,6 @@ socket.on('showTyping', (username) => {
         typingIndicator.style.display = 'none';
     }, 2000);
 });
-
-// Scroll to bottom of the chat container
-function scrollToBottom() {
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
 
 //  User Message Send
 messageForm.addEventListener('submit', (e) => {
@@ -109,41 +136,41 @@ socket.on('notification', (data) => {
 
 // Display Messages
 socket.on('previousMessages', (messages) => {
-    console.log("previousMessages", messages);
-    messages.forEach(message => {
+    // console.log("previousMessages", messages);
+    messages.forEach((message) => {
         displayMessage(message);
     });
+
+    // Chat scroll bottom
+    scrollToBottom();
 })
 
 // receiving messages
 socket.on('receiveMessage', (data) => {
     console.log("receiveMessage", data)
     displayMessage(data);
+
+    // Chat scroll bottom
+    scrollToBottom();
 });
 
-function displayMessage(data) {
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message', data.sender === username ? 'sender' : 'receiver');
+// User active status
+socket.on('userStatus', (activeUsers) => {
+    const userList = document.getElementById('userList');
+    userList.innerHTML = '';
 
-    messageElement.innerHTML = `
-    <img src="https://picsum.photos/200"+ class="user-image" alt="user-icon">
-    <div class="message-content">
-        <div>
-            <div class="message-info">
-                <strong>${data.sender}</strong>
-                <small>${data.date}</small>
-            </div>
-            <div class="message-text">
-                ${data.message}
-            </div>
-        </div>
-    </div>
-   
-`;
-    chatMessages.appendChild(messageElement);
+     // Update the count of online users
+     userCount.textContent = Object.keys(activeUsers).length;
 
-    // Chat scroll bottom 
-    scrollToBottom();
-}
+    // Display each active user
+    for (let userId in activeUsers) {
+        const userItem = document.createElement('li');
+        userItem.className = 'list-group-item text-success f5';
+        userItem.innerText = `${' • ' + activeUsers[userId]}`;
+        userList.appendChild(userItem);
+    }
+})
+
+
 
 

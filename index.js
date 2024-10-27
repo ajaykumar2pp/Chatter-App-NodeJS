@@ -20,6 +20,9 @@ app.use(express.json());
 // Create HTTP server
 const server = http.createServer(app);
 
+// Active user objects
+const activeUsers = {};
+
 // Initialize Socket.IO with the server
 const io = new Server(server);
 
@@ -37,6 +40,9 @@ io.on("connection", async (socket) => {
     // Username add 
     socket.on("userData", ({ username, password }) => {
 
+        // Store user info in the activeUsers
+        activeUsers[socket.id] = username;
+
         // Store user info in the socket object
         socket.username = username;
 
@@ -48,30 +54,31 @@ io.on("connection", async (socket) => {
             password,
             date: moment().format('MMMM Do YYYY, h:mm a')
         });
-        console.log(newUser)
-        const userId = newUser._id.toString();
-        // const newU = { _id: userId };
-        // console.log(newU);
-        // newUser.save().then((savedUser) => {
-        //     io.emit('addUser', savedUser);
-        // }).catch(err => console.error('Error saving user:', err));
+        // console.log(newUser)
+
+        newUser.save().then((savedUser) => {
+            io.emit('addUser', savedUser);
+        }).catch(err => console.error('Error saving user:', err));
 
         // Notify other users about the new connection
         socket.broadcast.emit("notification", { message: `${username} has joined the chat` })
-    })
+        
+        // Active users list
+        io.emit('userStatus', activeUsers);
+})
 
     // User Message Send
     socket.on('chatMessage', ({ username, message }) => {
         const newMessage = new Chat({
             message,
             sender: username,
-            date: moment().format('MMMM Do YYYY, h:mm a')
+            date: moment().format('h:mm a')
         });
         // console.log(newMessage)
-        // newMessage.save().then(() => {
-        //     io.emit('receiveMessage', newMessage);
-        // });
-        io.emit('receiveMessage', newMessage);
+        newMessage.save().then(() => {
+            io.emit('receiveMessage', newMessage);
+        });
+        // io.emit('receiveMessage', newMessage);
     })
 
     // Typing Notification
@@ -84,6 +91,14 @@ io.on("connection", async (socket) => {
         const username = socket.username;
         if(username){
             console.log(`${username} has left the chat`);
+
+             // Remove  user from the active users list
+             delete activeUsers[socket.id];
+
+            //  Updated active users list
+             io.emit('userStatus', activeUsers);
+
+             // Notify user leaving
             io.emit('notification',{message : `${username} has left the chat` } );
         }else{
             console.log("User disconnected");
