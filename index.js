@@ -47,7 +47,7 @@ io.on("connection",  (socket) => {
         // Previous messages
         const messages = await Chat.find().sort({ date: -1 });
         // console.log(messages)
-        socket.emit('previousMessages', messages);
+        socket.emit('previousMessages', messages.reverse());
 
         // Welcome the current user
         socket.emit('message', { message: `Welcome ${username} ` });
