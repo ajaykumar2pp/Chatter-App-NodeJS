@@ -3,7 +3,8 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const { Server } = require('socket.io');
-const moment = require('moment')
+// const moment = require('moment')
+const moment = require('moment-timezone');
 const dbConfig = require('./src/config/db.config')
 const User = require("./src/models/user.model.js")
 const Chat = require("./src/models/chat.model.js")
@@ -29,22 +30,24 @@ const io = new Server(server);
 // Serve static files (like HTML, CSS, JS) from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-io.on("connection", async (socket) => {
+io.on("connection",  (socket) => {
     console.log(`New user connected : ${socket.id}`);
 
-    // Previous messages
-    const messages = await Chat.find().sort({ date: -1 });
-    // console.log(messages)
-    socket.emit('previousMessages', messages);
+
 
     // Username add 
-    socket.on("userData", ({ username, password }) => {
+    socket.on("userData", async ({ username, password }) => {
 
         // Store user info in the activeUsers
         activeUsers[socket.id] = username;
 
         // Store user info in the socket object
         socket.username = username;
+
+        // Previous messages
+        const messages = await Chat.find().sort({ date: -1 });
+        // console.log(messages)
+        socket.emit('previousMessages', messages);
 
         // Welcome the current user
         socket.emit('message', { message: `Welcome ${username} ` });
@@ -56,9 +59,9 @@ io.on("connection", async (socket) => {
         });
         // console.log(newUser)
 
-        // newUser.save().then((savedUser) => {
-        //     io.emit('addUser', savedUser);
-        // }).catch(err => console.error('Error saving user:', err));
+        newUser.save().then((savedUser) => {
+            io.emit('addUser', savedUser);
+        }).catch(err => console.error('Error saving user:', err));
 
         // Notify other users about the new connection
         socket.broadcast.emit("notification", { message: `${username} has joined the chat` })
@@ -72,13 +75,13 @@ io.on("connection", async (socket) => {
         const newMessage = new Chat({
             message,
             sender: username,
-            date: moment().format('h:mm a')
+            date: moment().tz("Asia/Kolkata").format('MMMM Do YYYY, h:mm a'),
         });
-        // console.log(newMessage)
-        // newMessage.save().then(() => {
-        //     io.emit('receiveMessage', newMessage);
-        // });
-        io.emit('receiveMessage', newMessage);
+        console.log(newMessage)
+        newMessage.save().then(() => {
+            io.emit('receiveMessage', newMessage);
+        });
+        // io.emit('receiveMessage', newMessage);
     })
 
     // Typing Notification

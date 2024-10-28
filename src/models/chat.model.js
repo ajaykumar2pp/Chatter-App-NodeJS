@@ -14,7 +14,11 @@ const chatSchema = new Schema({
     date: {
         type: String,
         default: Date.now
-    }
+    },
+    // timestamp: {
+    //     type: Date,
+    //     default: Date.now
+    // }
 });
 
 const Chat = mongoose.model('Chat', chatSchema);
