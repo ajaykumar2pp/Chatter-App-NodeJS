@@ -6,7 +6,7 @@ const chatContainer = document.getElementById('chat-container');
 const loginContainer = document.getElementById('login-container');
 const loginForm = document.getElementById('login-form');
 const userInput = document.getElementById('username')
-const userPassword = document.getElementById('password')
+// const userPassword = document.getElementById('password')
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input')
 const chatMessages = document.getElementById('chat-messages')
@@ -22,7 +22,7 @@ chatContainer.style.display = 'none';
 typingIndicator.style.display = 'none';
 
 let username = '';
-let password = '';
+// let password = '';
 
 // Login Form
 loginForm.addEventListener('submit', (e) => {
@@ -30,21 +30,21 @@ loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     username = userInput.value.trim();
-    password = userPassword.value.trim();
+    // password = userPassword.value.trim();
 
-    if (!username || !password) {
-        alert('Please enter both username and password.');
+    if (!username ) {
+        alert('Please enter your name');
         return;
     }
 
     // console.log(`Username: ${username} and Password: ${password}`)
 
     //  Send user name to server
-    socket.emit('userData', { username, password });
+    socket.emit('userData', { username});
 
     // Empty the field
     userInput.value = "";
-    userPassword.value = "";
+    // userPassword.value = "";
 
     // Hide the login form and show the chat container
     loginContainer.style.display = 'none';

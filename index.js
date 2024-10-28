@@ -36,7 +36,7 @@ io.on("connection",  (socket) => {
 
 
     // Username add 
-    socket.on("userData", async ({ username, password }) => {
+    socket.on("userData", async ({ username }) => {
 
         // Store user info in the activeUsers
         activeUsers[socket.id] = username;
@@ -54,7 +54,7 @@ io.on("connection",  (socket) => {
 
         const newUser = new User({
             username,
-            password
+            // password
             // date: moment().format('MMMM Do YYYY, h:mm a')
         });
         // console.log(newUser)
