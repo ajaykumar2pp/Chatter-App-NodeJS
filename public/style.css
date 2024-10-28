@@ -1,9 +1,10 @@
-/* html,
+html,
 body {
-    height: 100%;
+    padding: 0;
     margin: 0; 
    overflow: auto;
-} */
+   height: 100%;
+}
 
 
 /* HTML Scrollbar   */
@@ -210,8 +211,6 @@ html::-webkit-scrollbar-track {
         padding: 0 10px;
     }
 
-
-
     .message-content {
         max-width: 100%;
         border-radius: 10px;
@@ -233,10 +232,17 @@ html::-webkit-scrollbar-track {
 }
 
 @media (max-width: 576px) {
+    .app{
+        display: none;
+    }
 
     #login-container {
         margin-top: 80px;
         padding: 0 15px;
+    }
+
+    .chat {
+        height: calc(100vh - 180px);
     }
 
     .chat-box {
@@ -252,17 +258,20 @@ html::-webkit-scrollbar-track {
     }
 
     .custom-input {
-        font-size: 14px;
+        position: fixed;
+        font-size: 12px;
         padding: 8px;
+        bottom: 0;
     }
 
     .user-list {
         position: sticky;
         top: 20px;
-        max-height: 100px;
+        max-height: 140px;
     }
 
     .user-list ul {
         max-height: 140px;
+        overflow-y: auto;
     }
 }
