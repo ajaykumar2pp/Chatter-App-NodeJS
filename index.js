@@ -56,9 +56,9 @@ io.on("connection", async (socket) => {
         });
         // console.log(newUser)
 
-        newUser.save().then((savedUser) => {
-            io.emit('addUser', savedUser);
-        }).catch(err => console.error('Error saving user:', err));
+        // newUser.save().then((savedUser) => {
+        //     io.emit('addUser', savedUser);
+        // }).catch(err => console.error('Error saving user:', err));
 
         // Notify other users about the new connection
         socket.broadcast.emit("notification", { message: `${username} has joined the chat` })
@@ -75,10 +75,10 @@ io.on("connection", async (socket) => {
             date: moment().format('h:mm a')
         });
         // console.log(newMessage)
-        newMessage.save().then(() => {
-            io.emit('receiveMessage', newMessage);
-        });
-        // io.emit('receiveMessage', newMessage);
+        // newMessage.save().then(() => {
+        //     io.emit('receiveMessage', newMessage);
+        // });
+        io.emit('receiveMessage', newMessage);
     })
 
     // Typing Notification
