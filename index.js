@@ -54,8 +54,8 @@ io.on("connection",  (socket) => {
 
         const newUser = new User({
             username,
-            password,
-            date: moment().format('MMMM Do YYYY, h:mm a')
+            password
+            // date: moment().format('MMMM Do YYYY, h:mm a')
         });
         // console.log(newUser)
 
